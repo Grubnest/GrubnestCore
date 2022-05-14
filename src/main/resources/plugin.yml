@@ -1,0 +1,6 @@
+name: GrubnestCore
+main: com.grubnest.game.core
+version: 1.0
+authors:
+  - Theeef
+api-version: 1.13
