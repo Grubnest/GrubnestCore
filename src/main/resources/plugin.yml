@@ -3,4 +3,5 @@ main: com.grubnest.game.core.GrubnestCorePlugin
 version: 1.0
 authors:
   - Theeef
-api-version: 1.13
+  - tamilpp25
+api-version: 1.18
