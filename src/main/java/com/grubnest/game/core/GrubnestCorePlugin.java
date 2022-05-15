@@ -14,6 +14,11 @@ public class GrubnestCorePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+
+        //Register Plugin messaging channels on enable
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage());
+
         getConfig().options().copyDefaults(true);
         saveConfig();
         sql = new MySQL(dataInitializer());
@@ -25,6 +30,9 @@ public class GrubnestCorePlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         Disabler.getInstance().disableAll();
+        //Unregister channels on disable
+        this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
+        this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
     }
 
     private MySQLData dataInitializer(){
