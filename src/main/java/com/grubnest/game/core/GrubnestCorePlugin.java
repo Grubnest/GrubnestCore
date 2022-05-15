@@ -35,6 +35,10 @@ public class GrubnestCorePlugin extends JavaPlugin {
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
     }
 
+    /**
+     * Initialize data from config.yml
+     * @return MySQLData
+     */
     private MySQLData dataInitializer(){
         String host = getConfig().getString("Database.hostname");
         String port = getConfig().getString("Database.port");
@@ -48,10 +52,18 @@ public class GrubnestCorePlugin extends JavaPlugin {
         return new MySQLData(host,username,password,port,database,minimumConnections,maximumConnections,connectionTimeout);
     }
 
+    /**
+     * Get SQL Object
+     * @return SQL object
+     */
     public MySQL getMySQL(){
         return sql;
     }
 
+    /**
+     * Get Plugin Instance
+     * @return Plugin Instance
+     */
     public static GrubnestCorePlugin getInstance(){
         return instance;
     }

@@ -17,15 +17,26 @@ public class Disabler {
 		return instance = new Disabler();
 	}
 
+	/**
+	 * close all active mysql connections
+	 */
 	public void disableAll() {
 		for (Deactivated toDeactivated : toDisable)
 			toDeactivated.onDisable();
 	}
 
+	/**
+	 * Disable specific class with mysql connection
+	 * @param sqlinstance SQL instance
+	 */
 	public void disable(Deactivated sqlinstance) {
 		sqlinstance.onDisable();
 	}
 
+	/**
+	 * Register a class as mysql connection pool
+	 * @param pDeactivated Class to be registered
+	 */
 	public void registerDeactivated(Deactivated pDeactivated) {
 		toDisable.add(pDeactivated);
 	}

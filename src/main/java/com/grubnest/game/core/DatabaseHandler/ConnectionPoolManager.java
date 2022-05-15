@@ -19,6 +19,10 @@ public class ConnectionPoolManager implements Deactivated {
 	private HikariDataSource dataSource;
 
 
+	/**
+	 * Construct mysql HikariCP
+	 * @param data MysqlDATA
+	 */
 	public ConnectionPoolManager(MySQLData data) {
 		this.data = data;
 		setupPool();

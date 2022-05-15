@@ -6,5 +6,7 @@ package com.grubnest.game.core.DatabaseHandler.Utils;
  * @version 1.0 at 15-5-2022
  */
 public interface Deactivated {
+
 	void onDisable();
+
 }
