@@ -6,7 +6,7 @@ The Core plugin for the Minecraft Minigame server, The Grubnest
 2. Look at the To-do column and find a task that is assigned to you
 3. Find an epic task. Epic tasks are tasks that have several subtasks that you must complete. Start here
 4. Complete your task. For an epic task, start here but for each separate task issue
-5. Clone the development branch
+5. Fork the development branch
 5. Create a new branch off of the `development`branch you just cloned. If it's a bug, the branch name should start with "hotfix". If it's an enhancement it should start with "feature".
 6. Make any changes you need to implement the issue
 7. Create a Pull Request to merge your changes into the `development` branch.
