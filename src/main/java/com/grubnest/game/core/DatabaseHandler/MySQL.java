@@ -43,6 +43,8 @@ public class MySQL extends ConnectionPoolManager {
 		});
 	}
 
+	//You make method to fetch / add data in this class
+
 	/**
 	 * Close pool on plugin Disable
 	 */
