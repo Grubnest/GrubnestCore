@@ -3,6 +3,8 @@ package com.grubnest.game.core.velocity;
 import com.google.inject.Inject;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import net.kyori.adventure.text.Component;
+import net.minecraft.network.chat.TextColor;
 import org.slf4j.Logger;
 
 /**
@@ -32,7 +34,7 @@ public class VelocityPlugin {
         this.server = server;
         this.logger = logger;
 
-        logger.info("Hello there! Velocity is working!");
+        this.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
     }
 
 }
