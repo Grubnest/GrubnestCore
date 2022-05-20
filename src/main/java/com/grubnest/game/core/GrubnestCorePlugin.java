@@ -3,11 +3,15 @@ package com.grubnest.game.core;
 import com.grubnest.game.core.DatabaseHandler.MySQL;
 import com.grubnest.game.core.DatabaseHandler.MySQLData;
 import com.grubnest.game.core.DatabaseHandler.Utils.Disabler;
+import com.velocitypowered.api.proxy.ProxyServer;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.slf4j.Logger;
 
 public class GrubnestCorePlugin extends JavaPlugin {
+
     private MySQL sql;
     private static GrubnestCorePlugin instance;
+
     /**
      * Runs when plugin is enabled
      */
@@ -37,9 +41,10 @@ public class GrubnestCorePlugin extends JavaPlugin {
 
     /**
      * Initialize data from config.yml
+     *
      * @return MySQLData
      */
-    private MySQLData dataInitializer(){
+    private MySQLData dataInitializer() {
         String host = getConfig().getString("Database.hostname");
         String port = getConfig().getString("Database.port");
         String database = getConfig().getString("Database.database");
@@ -49,22 +54,24 @@ public class GrubnestCorePlugin extends JavaPlugin {
         int minimumConnections = getConfig().getInt("Database.minimumConnections");
         int maximumConnections = getConfig().getInt("Database.maximumConnections");
         long connectionTimeout = getConfig().getLong("Database.connectionTimeout");
-        return new MySQLData(host,username,password,port,database,minimumConnections,maximumConnections,connectionTimeout);
+        return new MySQLData(host, username, password, port, database, minimumConnections, maximumConnections, connectionTimeout);
     }
 
     /**
      * Get SQL Object
+     *
      * @return SQL object
      */
-    public MySQL getMySQL(){
+    public MySQL getMySQL() {
         return sql;
     }
 
     /**
      * Get Plugin Instance
+     *
      * @return Plugin Instance
      */
-    public static GrubnestCorePlugin getInstance(){
+    public static GrubnestCorePlugin getInstance() {
         return instance;
     }
 }
