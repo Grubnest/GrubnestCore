@@ -3,9 +3,7 @@ package com.grubnest.game.core;
 import com.grubnest.game.core.DatabaseHandler.MySQL;
 import com.grubnest.game.core.DatabaseHandler.MySQLData;
 import com.grubnest.game.core.DatabaseHandler.Utils.Disabler;
-import com.velocitypowered.api.proxy.ProxyServer;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.slf4j.Logger;
 
 public class GrubnestCorePlugin extends JavaPlugin {
 

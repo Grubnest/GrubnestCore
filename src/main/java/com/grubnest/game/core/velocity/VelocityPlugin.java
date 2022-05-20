@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
-import net.minecraft.network.chat.TextColor;
 import org.slf4j.Logger;
 
 /**
