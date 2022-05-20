@@ -1,4 +1,4 @@
-package com.grubnest.game.core.velocity;
+package com.grubnest.game.core.Velocity;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.plugin.Plugin;
