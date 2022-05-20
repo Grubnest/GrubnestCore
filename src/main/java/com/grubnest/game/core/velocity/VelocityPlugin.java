@@ -13,8 +13,8 @@ import org.slf4j.Logger;
  * Date: 5/20/2022
  * Authors: Theeef
  */
-@Plugin(id = "myfirstplugin", name = "My First Plugin", version = "0.1.0-SNAPSHOT",
-        url = "https://example.org", description = "I did it!", authors = {"Me"})
+@Plugin(id = "grubnestcore", name = "Grubnest Core Plugin", version = "0.1.0-SNAPSHOT",
+        url = "htts://grubnest.com", description = "Grubnest Core running on Velocity", authors = {"Theeef"})
 public class VelocityPlugin {
 
     private final ProxyServer server;
@@ -31,6 +31,8 @@ public class VelocityPlugin {
     public VelocityPlugin(ProxyServer server, Logger logger) {
         this.server = server;
         this.logger = logger;
+
+        logger.info("Hello there! Velocity is working!");
     }
 
 }
