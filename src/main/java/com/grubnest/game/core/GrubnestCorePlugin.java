@@ -30,9 +30,23 @@ public class GrubnestCorePlugin extends JavaPlugin {
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage());
 
+        loadConfig();
+        loadSQL();
+    }
+
+    /**
+     * Instantiates MySQL object for Spigot Core
+     */
+    public void loadSQL() {
+        this.sql = new MySQL(dataInitializer());
+    }
+
+    /**
+     * Loads the config and enables copying defaults
+     */
+    public void loadConfig() {
         getConfig().options().copyDefaults(true);
         saveConfig();
-        sql = new MySQL(dataInitializer());
     }
 
     /**
@@ -82,17 +96,4 @@ public class GrubnestCorePlugin extends JavaPlugin {
         return instance;
     }
 
-    public void setRank(UUID uuid, Rank rank) {
-        GrubnestCorePlugin.getInstance().getServer().getScheduler().runTaskAsynchronously(GrubnestCorePlugin.getInstance(), () -> {
-            try (Connection connection = GrubnestCorePlugin.getInstance().getMySQL().getConnection()) {
-                int rankID = 0;
-                PreparedStatement statement = connection.prepareStatement("SELECT ID FROM `Rank` WHERE NAME = `Admin`");
-                statement.executeUpdate();
-
-                rankID = statement.getResultSet().getInt(2);
-            } catch (SQLException exception) {
-                exception.printStackTrace();
-            }
-        }
-
-    }
+}
