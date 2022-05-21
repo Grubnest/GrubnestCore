@@ -1,23 +1,19 @@
 package com.grubnest.game.core.velocity;
 
 import com.google.inject.Inject;
-import com.grubnest.game.core.GrubnestCorePlugin;
 import com.grubnest.game.core.databasehandler.MySQL;
 import com.grubnest.game.core.databasehandler.MySQLData;
 import com.grubnest.game.core.velocity.events.CoreEventListener;
-import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.slf4j.Logger;
+import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.io.InputStream;
+import java.util.Map;
 
 /**
  * The VelocityPlugin class is an implementation of the Velocity API.
@@ -48,6 +44,7 @@ public class VelocityPlugin {
 
         this.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
         this.sql = new MySQL(dataInitializer());
+
         instance = this;
     }
 
@@ -62,17 +59,20 @@ public class VelocityPlugin {
      * @return MySQLData
      */
     private MySQLData dataInitializer() {
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(getClass().getResource("config.yml").getPath()));
+        Yaml yaml = new Yaml();
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("config.yml");
+        Map<String, Object> config = yaml.load(inputStream);
+        config = (Map<String, Object>) config.get("Database");
 
-        String host = config.getString("Database.hostname");
-        String port = config.getString("Database.port");
-        String database = config.getString("Database.database");
-        String username = config.getString("Database.username");
-        String password = config.getString("Database.password");
+        String host = (String) config.get("hostname");
+        int port = (int) config.get("port");
+        String database = (String) config.get("database");
+        String username = (String) config.get("username");
+        String password = (String) config.get("password");
 
-        int minimumConnections = config.getInt("Database.minimumConnections");
-        int maximumConnections = config.getInt("Database.maximumConnections");
-        long connectionTimeout = config.getLong("Database.connectionTimeout");
+        int minimumConnections = (int) config.get("minimumConnections");
+        int maximumConnections = (int) config.get("maximumConnections");
+        long connectionTimeout = Long.valueOf((int) config.get("connectionTimeout"));
 
         return new MySQLData(host, username, password, port, database, minimumConnections, maximumConnections, connectionTimeout);
     }

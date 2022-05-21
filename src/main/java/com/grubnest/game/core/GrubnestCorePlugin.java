@@ -3,6 +3,7 @@ package com.grubnest.game.core;
 import com.grubnest.game.core.databasehandler.MySQL;
 import com.grubnest.game.core.databasehandler.MySQLData;
 import com.grubnest.game.core.databasehandler.utils.Disabler;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class GrubnestCorePlugin extends JavaPlugin {
@@ -20,6 +21,8 @@ public class GrubnestCorePlugin extends JavaPlugin {
         //Register Plugin messaging channels on enable
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage());
+
+        getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "GrubnestCore is Enabled");
 
         loadConfig();
         this.sql = new MySQL(dataInitializer());
@@ -51,7 +54,7 @@ public class GrubnestCorePlugin extends JavaPlugin {
      */
     private MySQLData dataInitializer() {
         String host = getConfig().getString("Database.hostname");
-        String port = getConfig().getString("Database.port");
+        int port = getConfig().getInt("Database.port");
         String database = getConfig().getString("Database.database");
         String username = getConfig().getString("Database.username");
         String password = getConfig().getString("Database.password");
