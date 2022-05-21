@@ -1,6 +1,9 @@
 package com.grubnest.game.core.Velocity;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.event.PostOrder;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
@@ -36,4 +39,14 @@ public class VelocityPlugin {
         this.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
     }
 
+    /**
+     * Logs basic user data to the server database when a user connects
+     * to a server on our network
+     *
+     * @param event The connection event that occurs
+     */
+    @Subscribe(order = PostOrder.NORMAL)
+    public void onServerConnect(ServerConnectedEvent event) {
+        // Log data here
+    }
 }
