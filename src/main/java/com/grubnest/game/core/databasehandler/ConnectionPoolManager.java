@@ -1,7 +1,7 @@
-package com.grubnest.game.core.DatabaseHandler;
+package com.grubnest.game.core.databasehandler;
 
-import com.grubnest.game.core.DatabaseHandler.Utils.Deactivated;
-import com.grubnest.game.core.DatabaseHandler.Utils.Disabler;
+import com.grubnest.game.core.databasehandler.utils.Deactivated;
+import com.grubnest.game.core.databasehandler.utils.Disabler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 

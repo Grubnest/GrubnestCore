@@ -1,11 +1,20 @@
 package com.grubnest.game.core;
 
-import com.grubnest.game.core.DatabaseHandler.MySQL;
-import com.grubnest.game.core.DatabaseHandler.MySQLData;
-import com.grubnest.game.core.DatabaseHandler.Utils.Disabler;
+import com.grubnest.game.core.databasehandler.MySQL;
+import com.grubnest.game.core.databasehandler.MySQLData;
+import com.grubnest.game.core.databasehandler.utils.Disabler;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.UUID;
+
 public class GrubnestCorePlugin extends JavaPlugin {
+
+    public enum Rank {
+        BUILDER, ADMIN, MODERATOR;
+    }
 
     private MySQL sql;
     private static GrubnestCorePlugin instance;
@@ -72,4 +81,18 @@ public class GrubnestCorePlugin extends JavaPlugin {
     public static GrubnestCorePlugin getInstance() {
         return instance;
     }
-}
+
+    public void setRank(UUID uuid, Rank rank) {
+        GrubnestCorePlugin.getInstance().getServer().getScheduler().runTaskAsynchronously(GrubnestCorePlugin.getInstance(), () -> {
+            try (Connection connection = GrubnestCorePlugin.getInstance().getMySQL().getConnection()) {
+                int rankID = 0;
+                PreparedStatement statement = connection.prepareStatement("SELECT ID FROM `Rank` WHERE NAME = `Admin`");
+                statement.executeUpdate();
+
+                rankID = statement.getResultSet().getInt(2);
+            } catch (SQLException exception) {
+                exception.printStackTrace();
+            }
+        }
+
+    }

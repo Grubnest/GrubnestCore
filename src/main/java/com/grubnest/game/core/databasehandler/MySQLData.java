@@ -1,4 +1,4 @@
-package com.grubnest.game.core.DatabaseHandler;
+package com.grubnest.game.core.databasehandler;
 
 /** MysqlData object to store credentials etc
  * @author tamilpp25

@@ -1,4 +1,4 @@
-package com.grubnest.game.core.DatabaseHandler;
+package com.grubnest.game.core.databasehandler;
 
 import com.grubnest.game.core.GrubnestCorePlugin;
 

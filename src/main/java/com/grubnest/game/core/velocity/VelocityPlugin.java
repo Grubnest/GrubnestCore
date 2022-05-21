@@ -1,4 +1,4 @@
-package com.grubnest.game.core.Velocity;
+package com.grubnest.game.core.velocity;
 
 import com.google.inject.Inject;
 import com.grubnest.game.core.GrubnestCorePlugin;
@@ -52,6 +52,7 @@ public class VelocityPlugin {
     @Subscribe(order = PostOrder.NORMAL)
     public void onServerConnect(ServerConnectedEvent event) {
         this.server.sendMessage(Component.text("SERVER CONNECTION EVENT FIRED FOR: " + event.getPlayer().getUsername()));
+
 
         GrubnestCorePlugin.getInstance().getServer().getScheduler().runTaskAsynchronously(GrubnestCorePlugin.getInstance(), () -> {
             try (Connection connection = GrubnestCorePlugin.getInstance().getMySQL().getConnection()) {
