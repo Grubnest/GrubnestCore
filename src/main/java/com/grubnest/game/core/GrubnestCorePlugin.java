@@ -5,16 +5,7 @@ import com.grubnest.game.core.databasehandler.MySQLData;
 import com.grubnest.game.core.databasehandler.utils.Disabler;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.UUID;
-
 public class GrubnestCorePlugin extends JavaPlugin {
-
-    public enum Rank {
-        BUILDER, ADMIN, MODERATOR;
-    }
 
     private MySQL sql;
     private static GrubnestCorePlugin instance;

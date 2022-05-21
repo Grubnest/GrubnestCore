@@ -2,14 +2,20 @@ package com.grubnest.game.core.velocity;
 
 import com.google.inject.Inject;
 import com.grubnest.game.core.GrubnestCorePlugin;
+import com.grubnest.game.core.databasehandler.MySQL;
+import com.grubnest.game.core.databasehandler.MySQLData;
+import com.grubnest.game.core.velocity.events.CoreEventListener;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
+import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.slf4j.Logger;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -26,7 +32,8 @@ import java.sql.PreparedStatement;
 public class VelocityPlugin {
 
     private final ProxyServer server;
-    private final Logger logger;
+    private MySQL sql;
+    private static VelocityPlugin instance;
 
 
     /**
@@ -38,36 +45,62 @@ public class VelocityPlugin {
     @Inject
     public VelocityPlugin(ProxyServer server, Logger logger) {
         this.server = server;
-        this.logger = logger;
 
         this.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
+        this.sql = new MySQL(dataInitializer());
+        instance = this;
+    }
+
+    @Subscribe
+    public void onInitialize(ProxyInitializeEvent event) {
+        this.server.getEventManager().register(this, new CoreEventListener());
     }
 
     /**
-     * Logs basic user data to the server database when a user connects
-     * to a server on our network
+     * Initialize data from config.yml
      *
-     * @param event The connection event that occurs
+     * @return MySQLData
      */
-    @Subscribe(order = PostOrder.NORMAL)
-    public void onServerConnect(ServerConnectedEvent event) {
-        this.server.sendMessage(Component.text("SERVER CONNECTION EVENT FIRED FOR: " + event.getPlayer().getUsername()));
+    private MySQLData dataInitializer() {
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(getClass().getResource("config.yml").getPath()));
 
+        String host = config.getString("Database.hostname");
+        String port = config.getString("Database.port");
+        String database = config.getString("Database.database");
+        String username = config.getString("Database.username");
+        String password = config.getString("Database.password");
 
-        GrubnestCorePlugin.getInstance().getServer().getScheduler().runTaskAsynchronously(GrubnestCorePlugin.getInstance(), () -> {
-            try (Connection connection = GrubnestCorePlugin.getInstance().getMySQL().getConnection()) {
-                PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `Players` (" +
-                        "UUID varchar(30), " +
-                        "name varchar(20)" +
-                        ");" +
-                        "IF NOT EXISTS ( SELECT 1 FROM `Player` WHERE UUID = " + event.getPlayer().getUniqueId().toString() + " )" +
-                        "BEGIN" +
-                        "INSERT INTO `Players` (UUID, username) VALUES ('" + event.getPlayer().getUniqueId().toString() + "', '" + event.getPlayer().getUsername() + "')" +
-                        "END");
-                statement.executeUpdate();
-            } catch (java.sql.SQLException e) {
-                e.printStackTrace();
-            }
-        });
+        int minimumConnections = config.getInt("Database.minimumConnections");
+        int maximumConnections = config.getInt("Database.maximumConnections");
+        long connectionTimeout = config.getLong("Database.connectionTimeout");
+
+        return new MySQLData(host, username, password, port, database, minimumConnections, maximumConnections, connectionTimeout);
+    }
+
+    /**
+     * Get SQL Object
+     *
+     * @return SQL object
+     */
+    public MySQL getMySQL() {
+        return this.sql;
+    }
+
+    /**
+     * Get the ProxyServer object
+     *
+     * @return ProxyServer object
+     */
+    public ProxyServer getServer() {
+        return this.server;
+    }
+
+    /**
+     * Get Plugin Instance
+     *
+     * @return Plugin Instance
+     */
+    public static VelocityPlugin getInstance() {
+        return instance;
     }
 }
