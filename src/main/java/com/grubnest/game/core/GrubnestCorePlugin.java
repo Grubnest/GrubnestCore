@@ -22,13 +22,6 @@ public class GrubnestCorePlugin extends JavaPlugin {
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage());
 
         loadConfig();
-        loadSQL();
-    }
-
-    /**
-     * Instantiates MySQL object for Spigot Core
-     */
-    public void loadSQL() {
         this.sql = new MySQL(dataInitializer());
     }
 
