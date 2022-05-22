@@ -45,7 +45,8 @@ public class ConnectionPoolManager implements Deactivated {
                         "/" +
                         data.DATABASE
         );
-        config.setDriverClassName("com.mysql.jdbc.Driver");
+
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setUsername(data.USERNAME);
         config.setPassword(data.PASSWORD);
         config.setMinimumIdle(data.minimumConnections);
