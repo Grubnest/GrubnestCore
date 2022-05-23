@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -28,7 +29,7 @@ import java.util.Map;
 public class VelocityPlugin {
 
     private final ProxyServer server;
-    private MySQL sql;
+    private final MySQL sql;
     private static VelocityPlugin instance;
 
 
@@ -51,6 +52,8 @@ public class VelocityPlugin {
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
         this.server.getEventManager().register(this, new CoreEventListener());
+
+        getMySQL().createTables();
     }
 
     /**
@@ -61,8 +64,8 @@ public class VelocityPlugin {
     private MySQLData dataInitializer() {
         Yaml yaml = new Yaml();
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("config.yml");
-        Map<String, Object> config = yaml.load(inputStream);
-        config = (Map<String, Object>) config.get("Database");
+        Map<String, Object> config;
+        config = (Map<String, Object>) ((Map<String, Object>) yaml.load(inputStream)).get("Database");
 
         String host = (String) config.get("hostname");
         int port = (int) config.get("port");
@@ -72,7 +75,7 @@ public class VelocityPlugin {
 
         int minimumConnections = (int) config.get("minimumConnections");
         int maximumConnections = (int) config.get("maximumConnections");
-        long connectionTimeout = Long.valueOf((int) config.get("connectionTimeout"));
+        long connectionTimeout = (long) (int) config.get("connectionTimeout");
 
         return new MySQLData(host, username, password, port, database, minimumConnections, maximumConnections, connectionTimeout);
     }

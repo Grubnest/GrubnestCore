@@ -1,5 +1,8 @@
 package com.grubnest.game.core.databasehandler;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  * Main class for handling mysql data
  * make your methods for getting / setting here in async!
@@ -23,6 +26,20 @@ public class MySQL extends ConnectionPoolManager {
      */
     public void onDisable() {
         closePool();
+    }
+
+    public void createTables() {
+        try {
+            PreparedStatement statement = getConnection().prepareStatement("""
+                    CREATE TABLE `player` (
+                        uuid varchar(30) PRIMARY KEY,
+                        username varchar(16)
+                    )
+                    """);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
