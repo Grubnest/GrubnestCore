@@ -13,16 +13,15 @@ import org.slf4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * The VelocityPlugin class is an implementation of the Velocity API.
  * It provides communication to and from the Velocity Proxy server
  * running on the Grubnest network
- * <p>
- * Date: 5/20/2022
- * Authors: Theeef
+ *
+ * @author Theeef
+ * @version 1.1 at 5/23/2022
  */
 @Plugin(id = "grubnestcore", name = "Grubnest Core Plugin", version = "0.1.0-SNAPSHOT",
         url = "htts://grubnest.com", description = "Grubnest Core running on Velocity", authors = {"Theeef"})

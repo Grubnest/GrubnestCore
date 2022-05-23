@@ -8,6 +8,13 @@ import net.kyori.adventure.text.Component;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Listens for core events, like Server Connection for Velocity
+ * <p>
+ *
+ * @author Theeef
+ * @version 1.0 at 5/23/2022
+ */
 public class CoreEventListener {
 
     /**
@@ -19,16 +26,24 @@ public class CoreEventListener {
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
         VelocityPlugin.getInstance().getServer().sendMessage(Component.text("SERVER CONNECTION EVENT FIRED FOR: " + event.getPlayer().getUsername()));
+        String query = """
+                INSERT INTO player
+                	(uuid, username)
+                VALUES
+                	("%uuid%", "%username%")
+                ON DUPLICATE KEY UPDATE
+                	username = "%username%";
+                	""";
+        query = query.replaceAll("%username%", event.getPlayer().getUsername()).replaceAll("%uuid%", event.getPlayer().getUniqueId().toString());
 
         try {
-            PreparedStatement statement = VelocityPlugin.getInstance().getMySQL().getConnection().prepareStatement("INSERT INTO player (uuid, username) VALUES ("
-                    + event.getPlayer().getUniqueId().toString() + ", " + event.getPlayer().getUsername()
-                    + ") ON DUPLICATE KEY UPDATE username = "
-                    + event.getPlayer().getUsername() + ";");
+            PreparedStatement statement = VelocityPlugin.getInstance().getMySQL().getConnection().prepareStatement(query);
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+
     }
 
 }
