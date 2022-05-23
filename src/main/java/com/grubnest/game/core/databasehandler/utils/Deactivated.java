@@ -1,4 +1,4 @@
-package com.grubnest.game.core.DatabaseHandler.Utils;
+package com.grubnest.game.core.databasehandler.utils;
 
 /**
  * Utility class to prevent Memory leak.

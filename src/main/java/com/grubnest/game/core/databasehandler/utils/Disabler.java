@@ -1,4 +1,4 @@
-package com.grubnest.game.core.DatabaseHandler.Utils;
+package com.grubnest.game.core.databasehandler.utils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,10 @@
 # DEFAULT VALUES FOR MYSQL DATABASE update later!!
 Database:
-  hostname: localhost
+  hostname: grubnest.com
   port: 3306
-  database: grubnest
-  username: root
-  password: 1234
+  database: s4_grubnest
+  username: u4_xb6o263UWu
+  password: Sf^R4vzWq6nKl!av!u+JTo81
   minimumConnections: 5
   maximumConnections: 10
   connectionTimeout: 5000
