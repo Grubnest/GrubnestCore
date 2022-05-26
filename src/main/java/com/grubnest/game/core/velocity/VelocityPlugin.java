@@ -21,7 +21,7 @@ import java.util.Map;
  * running on the Grubnest network
  *
  * @author Theeef
- * @version 1.1 at 5/23/2022
+ * @version 1.2 at 5/26/2022
  */
 @Plugin(id = "grubnestcore", name = "Grubnest Core Plugin", version = "0.1.0-SNAPSHOT",
         url = "htts://grubnest.com", description = "Grubnest Core running on Velocity", authors = {"Theeef"})
