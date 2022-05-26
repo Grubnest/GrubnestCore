@@ -1,5 +1,7 @@
 package com.grubnest.game.core.databasehandler;
 
+import com.velocitypowered.api.proxy.Player;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -42,6 +44,10 @@ public class MySQL extends ConnectionPoolManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updatePlayerUsername(Player player) {
+
     }
 
 }
