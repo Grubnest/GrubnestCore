@@ -1,6 +1,7 @@
 package com.grubnest.game.core.velocity.events;
 
 import com.grubnest.game.core.velocity.VelocityPlugin;
+import com.grubnest.game.core.velocity.entities.VPlayer;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import net.kyori.adventure.text.Component;
@@ -26,25 +27,8 @@ public class CoreEventListener {
      */
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
-        try {
-            PreparedStatement statement = VelocityPlugin.getInstance().getMySQL().getConnection().prepareStatement("""
-                    INSERT INTO player
-                    	(uuid, username)
-                    VALUES
-                    	(?, ?)
-                    ON DUPLICATE KEY UPDATE
-                    	username = ?;
-                    	""");
-            statement.setString(1, event.getPlayer().getUniqueId().toString());
-            statement.setString(2, event.getPlayer().getUsername());
-            statement.setString(3, event.getPlayer().getUsername());
-            statement.executeUpdate();
-            statement.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
+        VPlayer player = new VPlayer(event.getPlayer());
+        player.updateUsername();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.grubnest.game.core.databasehandler;
 
+import com.grubnest.game.core.velocity.VelocityPlugin;
 import com.velocitypowered.api.proxy.Player;
 
 import java.sql.Connection;
@@ -47,7 +48,22 @@ public class MySQL extends ConnectionPoolManager {
     }
 
     public void updatePlayerUsername(Player player) {
+        try {
+            PreparedStatement statement = getConnection().prepareStatement("""
+                    INSERT INTO player
+                    	(uuid, username)
+                    VALUES
+                    	(?, ?)
+                    ON DUPLICATE KEY UPDATE
+                    	username = ?;
+                    	""");
+            statement.setString(1, player.getUniqueId().toString());
+            statement.setString(2, player.getUsername());
+            statement.setString(3, player.getUsername());
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
-
-}
