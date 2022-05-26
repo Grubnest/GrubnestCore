@@ -5,6 +5,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import net.kyori.adventure.text.Component;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -26,19 +27,23 @@ public class CoreEventListener {
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
         VelocityPlugin.getInstance().getServer().sendMessage(Component.text("SERVER CONNECTION EVENT FIRED FOR: " + event.getPlayer().getUsername()));
-        String query = """
-                INSERT INTO player
-                	(uuid, username)
-                VALUES
-                	("%uuid%", "%username%")
-                ON DUPLICATE KEY UPDATE
-                	username = "%username%";
-                	""";
-        query = query.replaceAll("%username%", event.getPlayer().getUsername()).replaceAll("%uuid%", event.getPlayer().getUniqueId().toString());
 
         try {
-            PreparedStatement statement = VelocityPlugin.getInstance().getMySQL().getConnection().prepareStatement(query);
+            Connection connection = VelocityPlugin.getInstance().getMySQL().getConnection();
+            PreparedStatement statement = connection.prepareStatement("""
+                    INSERT INTO player
+                    	(uuid, username)
+                    VALUES
+                    	(?, ?)
+                    ON DUPLICATE KEY UPDATE
+                    	username = ?;
+                    	""");
+            statement.setString(0, event.getPlayer().getUniqueId().toString());
+            statement.setString(1, event.getPlayer().getUsername());
+            statement.setString(2, event.getPlayer().getUsername());
             statement.executeUpdate();
+            statement.close();
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
