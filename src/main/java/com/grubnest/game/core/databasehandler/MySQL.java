@@ -2,6 +2,7 @@ package com.grubnest.game.core.databasehandler;
 
 import com.grubnest.game.core.velocity.VelocityPlugin;
 import com.velocitypowered.api.proxy.Player;
+import org.bukkit.Bukkit;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,6 +33,9 @@ public class MySQL extends ConnectionPoolManager {
         closePool();
     }
 
+    /**
+     * Creates any tables required for the database. Runs at proxy server initialization
+     */
     public void createTables() {
         try {
             PreparedStatement statement = getConnection().prepareStatement("""
@@ -47,6 +51,11 @@ public class MySQL extends ConnectionPoolManager {
         }
     }
 
+    /**
+     * Updates a players username stored in the database
+     *
+     * @param player the player to store
+     */
     public void updatePlayerUsername(Player player) {
         try {
             PreparedStatement statement = getConnection().prepareStatement("""
@@ -65,5 +74,5 @@ public class MySQL extends ConnectionPoolManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
+}

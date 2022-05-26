@@ -48,6 +48,11 @@ public class VelocityPlugin {
         instance = this;
     }
 
+    /**
+     * Runs when the Proxy server initializes
+     *
+     * @param event event used in callback
+     */
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
         this.server.getEventManager().register(this, new CoreEventListener());
