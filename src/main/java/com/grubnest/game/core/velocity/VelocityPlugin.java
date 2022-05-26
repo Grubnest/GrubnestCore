@@ -43,7 +43,7 @@ public class VelocityPlugin {
         this.server = server;
 
         this.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
-        this.sql = new MySQL(dataInitializer());
+        this.sql = new MySQL(MySQLData.dataInitializer());
 
         instance = this;
     }
@@ -58,30 +58,6 @@ public class VelocityPlugin {
         this.server.getEventManager().register(this, new CoreEventListener());
 
         getMySQL().createTables();
-    }
-
-    /**
-     * Initialize data from config.yml
-     *
-     * @return MySQLData
-     */
-    private MySQLData dataInitializer() {
-        Yaml yaml = new Yaml();
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("config.yml");
-        Map<String, Object> config;
-        config = (Map<String, Object>) ((Map<String, Object>) yaml.load(inputStream)).get("Database");
-
-        String host = (String) config.get("hostname");
-        int port = (int) config.get("port");
-        String database = (String) config.get("database");
-        String username = (String) config.get("username");
-        String password = (String) config.get("password");
-
-        int minimumConnections = (int) config.get("minimumConnections");
-        int maximumConnections = (int) config.get("maximumConnections");
-        long connectionTimeout = (long) (int) config.get("connectionTimeout");
-
-        return new MySQLData(host, username, password, port, database, minimumConnections, maximumConnections, connectionTimeout);
     }
 
     /**
