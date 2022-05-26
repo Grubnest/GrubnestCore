@@ -31,8 +31,7 @@ public class MySQL extends ConnectionPoolManager {
 
     public void createTables() {
         try {
-            Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement("""
+            PreparedStatement statement = getConnection().prepareStatement("""
                     CREATE TABLE IF NOT EXISTS `player` (
                         uuid varchar(36) PRIMARY KEY,
                         username varchar(16)
@@ -40,7 +39,6 @@ public class MySQL extends ConnectionPoolManager {
                     """);
             statement.executeUpdate();
             statement.close();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
