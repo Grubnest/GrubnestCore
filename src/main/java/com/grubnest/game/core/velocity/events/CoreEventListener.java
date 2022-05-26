@@ -26,8 +26,6 @@ public class CoreEventListener {
      */
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
-        VelocityPlugin.getInstance().getServer().sendMessage(Component.text("SERVER CONNECTION EVENT FIRED FOR: " + event.getPlayer().getUsername()));
-
         try {
             Connection connection = VelocityPlugin.getInstance().getMySQL().getConnection();
             PreparedStatement statement = connection.prepareStatement("""
@@ -38,9 +36,9 @@ public class CoreEventListener {
                     ON DUPLICATE KEY UPDATE
                     	username = ?;
                     	""");
-            statement.setString(0, event.getPlayer().getUniqueId().toString());
-            statement.setString(1, event.getPlayer().getUsername());
+            statement.setString(1, event.getPlayer().getUniqueId().toString());
             statement.setString(2, event.getPlayer().getUsername());
+            statement.setString(3, event.getPlayer().getUsername());
             statement.executeUpdate();
             statement.close();
             connection.close();
