@@ -8,8 +8,8 @@ import java.util.Map;
 /**
  * MysqlData object to store credentials etc
  *
- * @author tamilpp25
- * @version 1.0 at 15-5-2022
+ * @author tamilpp25, Theeef
+ * @version 1.0 at 5/26/2022
  */
 public class MySQLData {
     public final String HOST;
