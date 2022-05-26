@@ -1,5 +1,6 @@
 package com.grubnest.game.core.databasehandler;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -30,13 +31,16 @@ public class MySQL extends ConnectionPoolManager {
 
     public void createTables() {
         try {
-            PreparedStatement statement = getConnection().prepareStatement("""
+            Connection connection = getConnection();
+            PreparedStatement statement = connection.prepareStatement("""
                     CREATE TABLE IF NOT EXISTS `player` (
                         uuid varchar(36) PRIMARY KEY,
                         username varchar(16)
                     )
                     """);
             statement.executeUpdate();
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
