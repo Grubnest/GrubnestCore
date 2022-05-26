@@ -27,8 +27,7 @@ public class CoreEventListener {
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
         try {
-            Connection connection = VelocityPlugin.getInstance().getMySQL().getConnection();
-            PreparedStatement statement = connection.prepareStatement("""
+            PreparedStatement statement = VelocityPlugin.getInstance().getMySQL().getConnection().prepareStatement("""
                     INSERT INTO player
                     	(uuid, username)
                     VALUES
@@ -41,7 +40,6 @@ public class CoreEventListener {
             statement.setString(3, event.getPlayer().getUsername());
             statement.executeUpdate();
             statement.close();
-            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
