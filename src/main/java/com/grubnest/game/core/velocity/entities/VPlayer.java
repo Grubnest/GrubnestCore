@@ -23,6 +23,9 @@ public class VPlayer implements GrubnestPlayer {
         this.player = player;
     }
 
+    /**
+     * Updates the cached username of this player in the database
+     */
     public void updateUsername() {
         VelocityPlugin.getInstance().getMySQL().updatePlayerUsername(this.player);
     }

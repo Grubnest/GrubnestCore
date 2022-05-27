@@ -1,10 +1,7 @@
 package com.grubnest.game.core.databasehandler;
 
-import com.grubnest.game.core.velocity.VelocityPlugin;
 import com.velocitypowered.api.proxy.Player;
-import org.bukkit.Bukkit;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -23,8 +20,6 @@ public class MySQL extends ConnectionPoolManager {
     public MySQL(MySQLData data) {
         super(data);
     }
-
-    //You make method to fetch / add data in this class
 
     /**
      * Close pool on plugin Disable

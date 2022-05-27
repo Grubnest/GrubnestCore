@@ -1,14 +1,11 @@
-package com.grubnest.game.core;
+package com.grubnest.game.core.paper;
 
+import com.grubnest.game.core.PluginMessage;
 import com.grubnest.game.core.databasehandler.MySQL;
 import com.grubnest.game.core.databasehandler.MySQLData;
 import com.grubnest.game.core.databasehandler.utils.Disabler;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.yaml.snakeyaml.Yaml;
-
-import java.io.InputStream;
-import java.util.Map;
 
 public class GrubnestCorePlugin extends JavaPlugin {
 
