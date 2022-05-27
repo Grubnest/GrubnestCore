@@ -1,6 +1,7 @@
 package com.grubnest.game.core.databasehandler;
 
-import java.sql.Connection;
+import com.velocitypowered.api.proxy.Player;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -20,8 +21,6 @@ public class MySQL extends ConnectionPoolManager {
         super(data);
     }
 
-    //You make method to fetch / add data in this class
-
     /**
      * Close pool on plugin Disable
      */
@@ -29,10 +28,12 @@ public class MySQL extends ConnectionPoolManager {
         closePool();
     }
 
+    /**
+     * Creates any tables required for the database. Runs at proxy server initialization
+     */
     public void createTables() {
         try {
-            Connection connection = getConnection();
-            PreparedStatement statement = connection.prepareStatement("""
+            PreparedStatement statement = getConnection().prepareStatement("""
                     CREATE TABLE IF NOT EXISTS `player` (
                         uuid varchar(36) PRIMARY KEY,
                         username varchar(16)
@@ -40,10 +41,33 @@ public class MySQL extends ConnectionPoolManager {
                     """);
             statement.executeUpdate();
             statement.close();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Updates a players username stored in the database
+     *
+     * @param player the player to store
+     */
+    public void updatePlayerUsername(Player player) {
+        try {
+            PreparedStatement statement = getConnection().prepareStatement("""
+                    INSERT INTO player
+                    	(uuid, username)
+                    VALUES
+                    	(?, ?)
+                    ON DUPLICATE KEY UPDATE
+                    	username = ?;
+                    	""");
+            statement.setString(1, player.getUniqueId().toString());
+            statement.setString(2, player.getUsername());
+            statement.setString(3, player.getUsername());
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

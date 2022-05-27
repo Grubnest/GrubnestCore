@@ -1,5 +1,6 @@
-package com.grubnest.game.core;
+package com.grubnest.game.core.paper;
 
+import com.grubnest.game.core.PluginMessage;
 import com.grubnest.game.core.databasehandler.MySQL;
 import com.grubnest.game.core.databasehandler.MySQLData;
 import com.grubnest.game.core.databasehandler.utils.Disabler;
@@ -25,7 +26,7 @@ public class GrubnestCorePlugin extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "GrubnestCore is Enabled");
 
         loadConfig();
-        this.sql = new MySQL(dataInitializer());
+        this.sql = new MySQL(MySQLData.dataInitializer());
     }
 
     /**
@@ -45,24 +46,6 @@ public class GrubnestCorePlugin extends JavaPlugin {
         //Unregister channels on disable
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
-    }
-
-    /**
-     * Initialize data from config.yml
-     *
-     * @return MySQLData
-     */
-    private MySQLData dataInitializer() {
-        String host = getConfig().getString("Database.hostname");
-        int port = getConfig().getInt("Database.port");
-        String database = getConfig().getString("Database.database");
-        String username = getConfig().getString("Database.username");
-        String password = getConfig().getString("Database.password");
-
-        int minimumConnections = getConfig().getInt("Database.minimumConnections");
-        int maximumConnections = getConfig().getInt("Database.maximumConnections");
-        long connectionTimeout = getConfig().getLong("Database.connectionTimeout");
-        return new MySQLData(host, username, password, port, database, minimumConnections, maximumConnections, connectionTimeout);
     }
 
     /**

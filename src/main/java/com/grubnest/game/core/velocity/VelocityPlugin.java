@@ -21,7 +21,7 @@ import java.util.Map;
  * running on the Grubnest network
  *
  * @author Theeef
- * @version 1.1 at 5/23/2022
+ * @version 1.2 at 5/26/2022
  */
 @Plugin(id = "grubnestcore", name = "Grubnest Core Plugin", version = "0.1.0-SNAPSHOT",
         url = "htts://grubnest.com", description = "Grubnest Core running on Velocity", authors = {"Theeef"})
@@ -43,40 +43,21 @@ public class VelocityPlugin {
         this.server = server;
 
         this.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
-        this.sql = new MySQL(dataInitializer());
+        this.sql = new MySQL(MySQLData.dataInitializer());
 
         instance = this;
     }
 
+    /**
+     * Runs when the Proxy server initializes
+     *
+     * @param event event used in callback
+     */
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
         this.server.getEventManager().register(this, new CoreEventListener());
 
         getMySQL().createTables();
-    }
-
-    /**
-     * Initialize data from config.yml
-     *
-     * @return MySQLData
-     */
-    private MySQLData dataInitializer() {
-        Yaml yaml = new Yaml();
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("config.yml");
-        Map<String, Object> config;
-        config = (Map<String, Object>) ((Map<String, Object>) yaml.load(inputStream)).get("Database");
-
-        String host = (String) config.get("hostname");
-        int port = (int) config.get("port");
-        String database = (String) config.get("database");
-        String username = (String) config.get("username");
-        String password = (String) config.get("password");
-
-        int minimumConnections = (int) config.get("minimumConnections");
-        int maximumConnections = (int) config.get("maximumConnections");
-        long connectionTimeout = (long) (int) config.get("connectionTimeout");
-
-        return new MySQLData(host, username, password, port, database, minimumConnections, maximumConnections, connectionTimeout);
     }
 
     /**

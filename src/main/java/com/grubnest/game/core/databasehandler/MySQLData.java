@@ -1,10 +1,15 @@
 package com.grubnest.game.core.databasehandler;
 
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.InputStream;
+import java.util.Map;
+
 /**
  * MysqlData object to store credentials etc
  *
- * @author tamilpp25
- * @version 1.0 at 15-5-2022
+ * @author tamilpp25, Theeef
+ * @version 1.0 at 5/26/2022
  */
 public class MySQLData {
     public final String HOST;
@@ -26,5 +31,29 @@ public class MySQLData {
         this.minimumConnections = minimumConnections;
         this.maximumConnections = maximumConnections;
         this.connectionTimeout = connectionTimeout;
+    }
+
+    /**
+     * Initialize data from config.yml
+     *
+     * @return MySQLData
+     */
+    public static MySQLData dataInitializer() {
+        Yaml yaml = new Yaml();
+        InputStream inputStream = MySQLData.class.getClassLoader().getResourceAsStream("config.yml");
+        Map<String, Object> config;
+        config = (Map<String, Object>) ((Map<String, Object>) yaml.load(inputStream)).get("Database");
+
+        String host = (String) config.get("hostname");
+        int port = (int) config.get("port");
+        String database = (String) config.get("database");
+        String username = (String) config.get("username");
+        String password = (String) config.get("password");
+
+        int minimumConnections = (int) config.get("minimumConnections");
+        int maximumConnections = (int) config.get("maximumConnections");
+        long connectionTimeout = (long) (int) config.get("connectionTimeout");
+
+        return new MySQLData(host, username, password, port, database, minimumConnections, maximumConnections, connectionTimeout);
     }
 }

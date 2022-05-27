@@ -1,5 +1,5 @@
 name: GrubnestCore
-main: com.grubnest.game.core.GrubnestCorePlugin
+main: com.grubnest.game.core.paper.GrubnestCorePlugin
 version: 1.0
 authors:
   - Theeef
