@@ -4,6 +4,7 @@ import com.velocitypowered.api.proxy.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  * Main class for handling mysql data
@@ -51,7 +52,7 @@ public class MySQL extends ConnectionPoolManager {
      *
      * @param player the player to store
      */
-    public void updatePlayerUsername(Player player) {
+    public void updatePlayerUsername(UUID id, String username) {
         try {
             PreparedStatement statement = getConnection().prepareStatement("""
                     INSERT INTO player
@@ -61,9 +62,9 @@ public class MySQL extends ConnectionPoolManager {
                     ON DUPLICATE KEY UPDATE
                     	username = ?;
                     	""");
-            statement.setString(1, player.getUniqueId().toString());
-            statement.setString(2, player.getUsername());
-            statement.setString(3, player.getUsername());
+            statement.setString(1, id.toString());
+            statement.setString(2, username);
+            statement.setString(3, username);
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {

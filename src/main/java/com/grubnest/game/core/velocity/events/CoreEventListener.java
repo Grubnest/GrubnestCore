@@ -1,6 +1,7 @@
 package com.grubnest.game.core.velocity.events;
 
-import com.grubnest.game.core.velocity.entities.VPlayer;
+import com.grubnest.game.core.util.Util;
+import com.grubnest.game.core.velocity.VelocityPlugin;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 
@@ -21,8 +22,7 @@ public class CoreEventListener {
      */
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
-        VPlayer player = new VPlayer(event.getPlayer());
-        player.updateUsername();
+        Util.updateUsername(VelocityPlugin.getInstance().getMySQL(), event.getPlayer().getUniqueId(), event.getPlayer().getUsername());
     }
 
 }
