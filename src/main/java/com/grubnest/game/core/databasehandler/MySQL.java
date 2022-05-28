@@ -2,6 +2,7 @@ package com.grubnest.game.core.databasehandler;
 
 import com.velocitypowered.api.proxy.Player;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -33,8 +34,8 @@ public class MySQL extends ConnectionPoolManager {
      * Creates any tables required for the database. Runs at proxy server initialization
      */
     public void createTables() {
-        try {
-            PreparedStatement statement = getConnection().prepareStatement("""
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("""
                     CREATE TABLE IF NOT EXISTS `player` (
                         uuid varchar(36) PRIMARY KEY,
                         username varchar(16)
@@ -50,11 +51,12 @@ public class MySQL extends ConnectionPoolManager {
     /**
      * Updates a players username stored in the database
      *
-     * @param player the player to store
+     * @param id       the player's uuid
+     * @param username the player's username
      */
     public void updatePlayerUsername(UUID id, String username) {
-        try {
-            PreparedStatement statement = getConnection().prepareStatement("""
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("""
                     INSERT INTO player
                     	(uuid, username)
                     VALUES
