@@ -10,10 +10,6 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
-import org.yaml.snakeyaml.Yaml;
-
-import java.io.InputStream;
-import java.util.Map;
 
 /**
  * The VelocityPlugin class is an implementation of the Velocity API.
@@ -67,15 +63,6 @@ public class VelocityPlugin {
      */
     public MySQL getMySQL() {
         return this.sql;
-    }
-
-    /**
-     * Get the ProxyServer object
-     *
-     * @return ProxyServer object
-     */
-    public ProxyServer getServer() {
-        return this.server;
     }
 
     /**
