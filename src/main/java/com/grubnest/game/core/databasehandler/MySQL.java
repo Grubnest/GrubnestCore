@@ -95,6 +95,31 @@ public class MySQL extends ConnectionPoolManager {
             e.printStackTrace();
         }
 
-        throw new NullPointerException("Could not retrive a UUID for a user with the name \"" + username + "\"");
+        throw new NullPointerException("Could not retrieve a UUID for a user with the name \"" + username + "\"");
+    }
+
+    /**
+     * Get a players last stored username from their uuid
+     *
+     * @param id the player's uuid
+     * @return the player's username
+     */
+    public String getUsernameFromID(UUID id) {
+        try (Connection connection = getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT username
+                    FROM player
+                    WHERE uuid = ?
+                    """);
+            statement.setString(1, id.toString());
+            ResultSet queryResults = statement.executeQuery();
+            statement.close();
+
+            return queryResults.getString(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        throw new NullPointerException("Could not retrieve a username for a user with the uuid \"" + id.toString() + "\"");
     }
 }
