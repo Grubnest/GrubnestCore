@@ -1,7 +1,5 @@
 package com.grubnest.game.core.databasehandler;
 
-import com.velocitypowered.api.proxy.Player;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +14,8 @@ import java.util.UUID;
  * Recommend using getMySQL method from main class as it properly does the work and closes connection on disable!
  * make a new instance of this if you really know what you are doing!
  *
- * @author tamilpp25
- * @version 1.0 at 15-5-2022
+ * @author tamilpp25, Theeef
+ * @version 1.1 at 5/29/2022
  */
 public class MySQL extends ConnectionPoolManager {
     public MySQL(MySQLData data) {

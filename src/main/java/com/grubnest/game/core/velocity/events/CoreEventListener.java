@@ -9,7 +9,7 @@ import com.velocitypowered.api.event.player.ServerConnectedEvent;
  * <p>
  *
  * @author Theeef
- * @version 1.0 at 5/23/2022
+ * @version 1.1 at 5/29/2022
  */
 public class CoreEventListener {
 
@@ -21,7 +21,7 @@ public class CoreEventListener {
      */
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
-        Util.updateUsername(VelocityPlugin.getInstance().getMySQL(), event.getPlayer().getUniqueId(), event.getPlayer().getUsername());
+        VelocityPlugin.getInstance().getMySQL().updatePlayerUsername(event.getPlayer().getUniqueId(), event.getPlayer().getUsername());
     }
 
 }
