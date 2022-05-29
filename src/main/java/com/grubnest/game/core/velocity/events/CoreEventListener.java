@@ -4,6 +4,7 @@ import com.grubnest.game.core.util.Util;
 import com.grubnest.game.core.velocity.VelocityPlugin;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
+import net.kyori.adventure.text.Component;
 
 /**
  * Listens for core events, like Server Connection for Velocity
