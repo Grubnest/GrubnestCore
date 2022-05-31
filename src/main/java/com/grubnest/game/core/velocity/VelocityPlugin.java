@@ -64,7 +64,7 @@ public class VelocityPlugin {
      *
      * @return SQL object
      */
-    public static MySQL getMySQL() {
+    public MySQL getMySQL() {
         return VelocityPlugin.sql;
     }
 

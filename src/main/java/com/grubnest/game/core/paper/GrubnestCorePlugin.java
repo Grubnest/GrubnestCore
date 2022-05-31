@@ -4,18 +4,21 @@ import com.grubnest.game.core.PluginMessage;
 import com.grubnest.game.core.databasehandler.MySQL;
 import com.grubnest.game.core.databasehandler.MySQLData;
 import com.grubnest.game.core.databasehandler.utils.Disabler;
-import com.grubnest.game.core.velocity.VelocityPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
+/**
+ * The GrubnestCorePlugin class is an implementation of the Spigot API.
+ * It provides communication to and from the Spigot (Paper) Minecraft server
+ * running on the Grubnest network
+ *
+ * @author Theeef
+ * @version 1.2 at 5/31/2022
+ */
 public class GrubnestCorePlugin extends JavaPlugin {
 
-    private MySQL sql;
+    private static MySQL sql;
     private static GrubnestCorePlugin instance;
 
     /**
@@ -32,7 +35,7 @@ public class GrubnestCorePlugin extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "GrubnestCore is Enabled");
 
         loadConfig();
-        this.sql = new MySQL(MySQLData.dataInitializer());
+        GrubnestCorePlugin.sql = new MySQL(MySQLData.dataInitializer());
     }
 
     /**
@@ -60,7 +63,7 @@ public class GrubnestCorePlugin extends JavaPlugin {
      * @return SQL object
      */
     public MySQL getMySQL() {
-        return sql;
+        return GrubnestCorePlugin.sql;
     }
 
     /**
@@ -69,7 +72,10 @@ public class GrubnestCorePlugin extends JavaPlugin {
      * @return Plugin Instance
      */
     public static GrubnestCorePlugin getInstance() {
-        return instance;
+        if (instance != null)
+            return instance;
+        else
+            return (GrubnestCorePlugin) Bukkit.getPluginManager().getPlugin("GrubnestCore");
     }
 
 }
