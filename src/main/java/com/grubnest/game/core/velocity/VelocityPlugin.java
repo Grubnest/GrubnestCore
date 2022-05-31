@@ -8,6 +8,7 @@ import com.grubnest.game.core.velocity.events.CoreEventListener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -16,6 +17,7 @@ import org.slf4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Optional;
 
 /**
  * The VelocityPlugin class is an implementation of the Velocity API.
@@ -80,4 +82,22 @@ public class VelocityPlugin {
         return VelocityPlugin.getProxyServer();
     }
 
+    /**
+     * Get Plugin Instance
+     *
+     * @return Plugin Instance
+     */
+    public static VelocityPlugin getInstance() {
+        if (instance != null)
+            return instance;
+        else {
+            Optional<PluginContainer> pluginContainer = VelocityPlugin.getProxyServer().getPluginManager().getPlugin("grubnestcore");
+            Optional<?> plugin = pluginContainer.isPresent() ? pluginContainer.get().getInstance() : Optional.empty();
+
+            if (plugin.isPresent())
+                return (VelocityPlugin) plugin.get();
+            else
+                throw new RuntimeException("GrubnestCore's velocity plugin instance was null!");
+        }
+    }
 }
