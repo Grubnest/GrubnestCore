@@ -3,7 +3,6 @@ package com.grubnest.game.core.velocity;
 import com.google.inject.Inject;
 import com.grubnest.game.core.databasehandler.MySQL;
 import com.grubnest.game.core.databasehandler.MySQLData;
-import com.grubnest.game.core.paper.GrubnestCorePlugin;
 import com.grubnest.game.core.velocity.events.CoreEventListener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -11,12 +10,8 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.PluginContainer;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.slf4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -25,7 +20,7 @@ import java.util.Optional;
  * running on the Grubnest network
  *
  * @author Theeef
- * @version 1.2 at 5/26/2022
+ * @version 1.2 at 5/31/2022
  */
 @Plugin(id = "grubnestcore", name = "Grubnest Core Plugin", version = "0.1.0-SNAPSHOT",
         url = "htts://grubnest.com", description = "Grubnest Core running on Velocity", authors = {"Theeef"})
