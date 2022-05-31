@@ -79,7 +79,7 @@ public class VelocityPlugin {
      * @return ProxyServer object
      */
     public static ProxyServer getProxyServer() {
-        return VelocityPlugin.getProxyServer();
+        return VelocityPlugin.server;
     }
 
     /**
