@@ -4,8 +4,14 @@ import com.grubnest.game.core.PluginMessage;
 import com.grubnest.game.core.databasehandler.MySQL;
 import com.grubnest.game.core.databasehandler.MySQLData;
 import com.grubnest.game.core.databasehandler.utils.Disabler;
+import com.grubnest.game.core.velocity.VelocityPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class GrubnestCorePlugin extends JavaPlugin {
 

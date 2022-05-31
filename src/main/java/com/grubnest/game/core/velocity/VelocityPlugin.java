@@ -3,13 +3,19 @@ package com.grubnest.game.core.velocity;
 import com.google.inject.Inject;
 import com.grubnest.game.core.databasehandler.MySQL;
 import com.grubnest.game.core.databasehandler.MySQLData;
+import com.grubnest.game.core.paper.GrubnestCorePlugin;
 import com.grubnest.game.core.velocity.events.CoreEventListener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.slf4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 /**
  * The VelocityPlugin class is an implementation of the Velocity API.
@@ -23,8 +29,8 @@ import org.slf4j.Logger;
         url = "htts://grubnest.com", description = "Grubnest Core running on Velocity", authors = {"Theeef"})
 public class VelocityPlugin {
 
-    private final ProxyServer server;
-    private final MySQL sql;
+    private static ProxyServer server;
+    private static MySQL sql;
     private static VelocityPlugin instance;
 
 
@@ -36,10 +42,10 @@ public class VelocityPlugin {
      */
     @Inject
     public VelocityPlugin(ProxyServer server, Logger logger) {
-        this.server = server;
+        VelocityPlugin.server = server;
 
-        this.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
-        this.sql = new MySQL(MySQLData.dataInitializer());
+        VelocityPlugin.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
+        VelocityPlugin.sql = new MySQL(MySQLData.dataInitializer());
 
         instance = this;
     }
@@ -51,7 +57,7 @@ public class VelocityPlugin {
      */
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
-        this.server.getEventManager().register(this, new CoreEventListener());
+        VelocityPlugin.server.getEventManager().register(this, new CoreEventListener());
 
         getMySQL().createTables();
     }
@@ -61,16 +67,17 @@ public class VelocityPlugin {
      *
      * @return SQL object
      */
-    public MySQL getMySQL() {
-        return this.sql;
+    public static MySQL getMySQL() {
+        return VelocityPlugin.sql;
     }
 
     /**
-     * Get Plugin Instance
+     * Get ProxyServer Object
      *
-     * @return Plugin Instance
+     * @return ProxyServer object
      */
-    public static VelocityPlugin getInstance() {
-        return instance;
+    public static ProxyServer getProxyServer() {
+        return VelocityPlugin.getProxyServer();
     }
+
 }
