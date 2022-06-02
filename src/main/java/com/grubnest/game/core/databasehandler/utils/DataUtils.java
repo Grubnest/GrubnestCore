@@ -11,7 +11,7 @@ import java.util.UUID;
  * @author Theeef
  * @version 1.0 at 6/2/2022
  */
-public class DataUtils {
+public abstract class DataUtils {
 
     /**
      * Updates a players username stored in the database
