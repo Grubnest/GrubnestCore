@@ -3,6 +3,7 @@ package com.grubnest.game.core.databasehandler.utils;
 import com.grubnest.game.core.databasehandler.MySQL;
 
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -31,9 +32,9 @@ public abstract class DataUtils {
      *
      * @param mysql    the mysql instance
      * @param username the player's username
-     * @return the player's uuid
+     * @return an optional containing the player's UUID, or nothing if an error occurred
      */
-    public static UUID getIDFromUsername(MySQL mysql, String username) {
+    public static Optional<UUID> getIDFromUsername(MySQL mysql, String username) {
         return mysql.getIdFromUsername(username);
     }
 

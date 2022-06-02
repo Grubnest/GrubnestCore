@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -81,7 +82,7 @@ public class MySQL extends ConnectionPoolManager {
      * @param username the player's username
      * @return the player's uuid
      */
-    public UUID getIdFromUsername(String username) {
+    public Optional<UUID> getIdFromUsername(String username) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement("""
                      SELECT uuid
@@ -91,9 +92,11 @@ public class MySQL extends ConnectionPoolManager {
             statement.setString(1, username);
             ResultSet queryResults = statement.executeQuery();
 
-            return UUID.fromString(queryResults.getString(1));
+            return Optional.of(UUID.fromString(queryResults.getString(1)));
         } catch (SQLException e) {
-            throw new RuntimeException("Could not get UUID of player with username \"" + username + "\"");
+            e.printStackTrace();
+
+            return Optional.empty();
         }
     }
 
