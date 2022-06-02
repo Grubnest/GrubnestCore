@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -47,12 +48,13 @@ public class MySQL extends ConnectionPoolManager {
     }
 
     /**
-     * Updates a players username stored in the database
+     * Updates the username mapped to the specified ID
      *
-     * @param id       the player's uuid
-     * @param username the player's username
+     * @param id       the uuid
+     * @param username the username
+     * @return whether or not the name was successfully updated
      */
-    public void updatePlayerUsername(UUID id, String username) {
+    public boolean updatePlayerUsername(UUID id, String username) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement("""
                      INSERT INTO player
@@ -67,8 +69,11 @@ public class MySQL extends ConnectionPoolManager {
             statement.setString(3, username);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Could not update username of player with UUID " + id.toString() + " and username " + username);
+            e.printStackTrace();
+            return false;
         }
+
+        return true;
     }
 
     /**
@@ -77,7 +82,7 @@ public class MySQL extends ConnectionPoolManager {
      * @param username the player's username
      * @return the player's uuid
      */
-    public UUID getIdFromUsername(String username) {
+    public Optional<UUID> getIdFromUsername(String username) {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement("""
                      SELECT uuid
@@ -87,9 +92,11 @@ public class MySQL extends ConnectionPoolManager {
             statement.setString(1, username);
             ResultSet queryResults = statement.executeQuery();
 
-            return UUID.fromString(queryResults.getString(1));
+            return Optional.of(UUID.fromString(queryResults.getString(1)));
         } catch (SQLException e) {
-            throw new RuntimeException("Could not get UUID of player with username \"" + username + "\"");
+            e.printStackTrace();
+
+            return Optional.empty();
         }
     }
 
@@ -99,7 +106,7 @@ public class MySQL extends ConnectionPoolManager {
      * @param id the player's uuid
      * @return the player's username
      */
-    public String getUsernameFromID(UUID id) {
+    public Optional<String> getUsernameFromID(UUID id) {
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT username
@@ -110,9 +117,11 @@ public class MySQL extends ConnectionPoolManager {
             ResultSet queryResults = statement.executeQuery();
             statement.close();
 
-            return queryResults.getString(1);
+            return Optional.of(queryResults.getString(1));
         } catch (SQLException e) {
-            throw new RuntimeException("Could not retrieve a username for a user with the uuid \"" + id.toString() + "\"");
+            e.printStackTrace();
+
+            return Optional.empty();
         }
     }
 }
