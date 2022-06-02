@@ -2,6 +2,7 @@ package com.grubnest.game.core.databasehandler.utils;
 
 import com.grubnest.game.core.databasehandler.MySQL;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
 /**
@@ -19,8 +20,9 @@ public abstract class DataUtils {
      * @param mysql    the mysql instance
      * @param id       the player's uuid
      * @param username the player's username
+     * @throws SQLException Thrown if database cannot be accessed
      */
-    public static void updatePlayerUsername(MySQL mysql, UUID id, String username) {
+    public static void updatePlayerUsername(MySQL mysql, UUID id, String username) throws SQLException {
         mysql.updatePlayerUsername(id, username);
     }
 

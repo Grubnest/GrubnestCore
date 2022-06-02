@@ -47,12 +47,13 @@ public class MySQL extends ConnectionPoolManager {
     }
 
     /**
-     * Updates a players username stored in the database
+     * Updates the username mapped to the specified ID
      *
-     * @param id       the player's uuid
-     * @param username the player's username
+     * @param id       the uuid
+     * @param username the username
+     * @throws SQLException Thrown if database cannot be accessed
      */
-    public void updatePlayerUsername(UUID id, String username) {
+    public void updatePlayerUsername(UUID id, String username) throws SQLException {
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement("""
                      INSERT INTO player
@@ -66,8 +67,6 @@ public class MySQL extends ConnectionPoolManager {
             statement.setString(2, username);
             statement.setString(3, username);
             statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Could not update username of player with UUID " + id.toString() + " and username " + username);
         }
     }
 
