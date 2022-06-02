@@ -31,7 +31,7 @@ public abstract class DataUtils {
      * @param username the player's username
      * @return the player's uuid
      */
-    public UUID getIDFromUsername(MySQL mysql, String username) {
+    public static UUID getIDFromUsername(MySQL mysql, String username) {
         return mysql.getIdFromUsername(username);
     }
 
@@ -42,7 +42,7 @@ public abstract class DataUtils {
      * @param id    the player's uuid
      * @return the player's username
      */
-    public String getUsernameFromID(MySQL mysql, UUID id) {
+    public static String getUsernameFromID(MySQL mysql, UUID id) {
         return mysql.getUsernameFromID(id);
     }
 }
