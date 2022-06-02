@@ -16,4 +16,13 @@ public class DataUtils {
         mysql.updatePlayerUsername(id, username);
     }
 
+    /**
+     * Gets a player's UUID from their last stored username
+     *
+     * @param username the player's username
+     * @return the player's uuid
+     */
+    public UUID getIdFromUsername(MySQL mysql, String username) {
+        return mysql.getIdFromUsername(username);
+    }
 }
