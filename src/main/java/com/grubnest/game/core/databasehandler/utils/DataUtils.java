@@ -4,6 +4,13 @@ import com.grubnest.game.core.databasehandler.MySQL;
 
 import java.util.UUID;
 
+/**
+ * Static accessors for MySQL queries through the
+ * MySQL class
+ *
+ * @author Theeef
+ * @version 1.0 at 6/2/2022
+ */
 public class DataUtils {
 
     /**
