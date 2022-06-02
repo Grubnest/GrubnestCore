@@ -30,7 +30,6 @@ public class VelocityPlugin {
     private static MySQL sql;
     private static VelocityPlugin instance;
 
-
     /**
      * Creates an instance of the Velocity Plugin and injects it
      *
