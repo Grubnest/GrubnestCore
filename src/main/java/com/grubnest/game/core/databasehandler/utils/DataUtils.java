@@ -45,7 +45,7 @@ public abstract class DataUtils {
      * @param id    the player's uuid
      * @return the player's username
      */
-    public static String getUsernameFromID(MySQL mysql, UUID id) {
+    public static Optional<String> getUsernameFromID(MySQL mysql, UUID id) {
         return mysql.getUsernameFromID(id);
     }
 }

@@ -106,7 +106,7 @@ public class MySQL extends ConnectionPoolManager {
      * @param id the player's uuid
      * @return the player's username
      */
-    public String getUsernameFromID(UUID id) {
+    public Optional<String> getUsernameFromID(UUID id) {
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("""
                     SELECT username
@@ -117,9 +117,11 @@ public class MySQL extends ConnectionPoolManager {
             ResultSet queryResults = statement.executeQuery();
             statement.close();
 
-            return queryResults.getString(1);
+            return Optional.of(queryResults.getString(1));
         } catch (SQLException e) {
-            throw new RuntimeException("Could not retrieve a username for a user with the uuid \"" + id.toString() + "\"");
+            e.printStackTrace();
+
+            return Optional.empty();
         }
     }
 }
