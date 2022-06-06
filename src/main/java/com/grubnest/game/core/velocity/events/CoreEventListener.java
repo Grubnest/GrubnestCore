@@ -1,10 +1,8 @@
 package com.grubnest.game.core.velocity.events;
 
-import com.grubnest.game.core.velocity.VelocityPlugin;
+import com.grubnest.game.core.databasehandler.DatabaseManager;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
-
-import java.sql.SQLException;
 
 /**
  * Listens for core events, like Server Connection for Velocity
@@ -23,7 +21,7 @@ public class CoreEventListener {
      */
     @Subscribe
     public void onServerConnect(ServerConnectedEvent event) {
-        VelocityPlugin.getInstance().getMySQL().updatePlayerUsername(event.getPlayer().getUniqueId(), event.getPlayer().getUsername());
+        DatabaseManager.getInstance().getMySQL().updatePlayerUsername(event.getPlayer().getUniqueId(), event.getPlayer().getUsername());
     }
 
 }

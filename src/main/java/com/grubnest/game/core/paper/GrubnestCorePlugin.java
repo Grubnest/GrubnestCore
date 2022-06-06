@@ -1,8 +1,5 @@
 package com.grubnest.game.core.paper;
 
-import com.grubnest.game.core.PluginMessage;
-import com.grubnest.game.core.databasehandler.MySQL;
-import com.grubnest.game.core.databasehandler.MySQLData;
 import com.grubnest.game.core.databasehandler.utils.Disabler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class GrubnestCorePlugin extends JavaPlugin {
 
-    private static MySQL sql;
     private static GrubnestCorePlugin instance;
 
     /**
@@ -28,14 +24,9 @@ public class GrubnestCorePlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        //Register Plugin messaging channels on enable
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage());
-
         getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "GrubnestCore is Enabled");
 
         loadConfig();
-        GrubnestCorePlugin.sql = new MySQL(MySQLData.dataInitializer());
     }
 
     /**
@@ -55,15 +46,6 @@ public class GrubnestCorePlugin extends JavaPlugin {
         //Unregister channels on disable
         this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
         this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
-    }
-
-    /**
-     * Get SQL Object
-     *
-     * @return SQL object
-     */
-    public MySQL getMySQL() {
-        return GrubnestCorePlugin.sql;
     }
 
     /**
