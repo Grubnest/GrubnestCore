@@ -1,15 +1,19 @@
 package com.grubnest.game.core.databasehandler;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
-public class DatabaseManager {
+public abstract class DatabaseManager {
 
-    private MySQL mysql;
+    private static MySQL mysql;
 
+    private void init() {
+        if (mysql == null)
+            mysql = new MySQL(MySQLData.dataInitializer());
+    }
 
-
-    public static Connection getConnection() {
-        return null;
+    public static Connection getConnection() throws SQLException {
+        return mysql.getConnection();
     }
 
 }
