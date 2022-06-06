@@ -4,8 +4,6 @@ import com.grubnest.game.core.velocity.VelocityPlugin;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
 
-import java.sql.SQLException;
-
 /**
  * Listens for core events, like Server Connection for Velocity
  * <p>
