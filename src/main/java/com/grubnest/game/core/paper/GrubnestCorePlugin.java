@@ -1,7 +1,5 @@
 package com.grubnest.game.core.paper;
 
-import com.grubnest.game.core.PluginMessage;
-import com.grubnest.game.core.databasehandler.DatabaseManager;
 import com.grubnest.game.core.databasehandler.utils.Disabler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,10 +23,6 @@ public class GrubnestCorePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-
-        //Register Plugin messaging channels on enable
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage());
 
         getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "GrubnestCore is Enabled");
 
