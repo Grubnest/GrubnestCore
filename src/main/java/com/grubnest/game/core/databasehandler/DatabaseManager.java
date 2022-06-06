@@ -7,7 +7,7 @@ public abstract class DatabaseManager {
 
     private static MySQL mysql;
 
-    private void init() {
+    public static void init() {
         if (mysql == null)
             mysql = new MySQL(MySQLData.dataInitializer());
     }

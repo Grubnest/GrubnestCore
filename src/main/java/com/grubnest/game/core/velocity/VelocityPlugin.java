@@ -1,9 +1,7 @@
 package com.grubnest.game.core.velocity;
 
 import com.google.inject.Inject;
-import com.grubnest.game.core.databasehandler.MySQL;
-import com.grubnest.game.core.databasehandler.MySQLData;
-import com.grubnest.game.core.databasehandler.utils.DataUtils;
+import com.grubnest.game.core.databasehandler.DatabaseManager;
 import com.grubnest.game.core.velocity.events.CoreEventListener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
@@ -28,7 +26,6 @@ import java.util.Optional;
 public class VelocityPlugin {
 
     private static ProxyServer server;
-    private static MySQL sql;
     private static VelocityPlugin instance;
 
     /**
@@ -40,11 +37,10 @@ public class VelocityPlugin {
     @Inject
     public VelocityPlugin(ProxyServer server, Logger logger) {
         VelocityPlugin.server = server;
-
         VelocityPlugin.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
-        VelocityPlugin.sql = new MySQL(MySQLData.dataInitializer());
 
         instance = this;
+        DatabaseManager.init();
     }
 
     /**
@@ -57,15 +53,6 @@ public class VelocityPlugin {
         VelocityPlugin.server.getEventManager().register(this, new CoreEventListener());
 
         getMySQL().createTables();
-    }
-
-    /**
-     * Get SQL Object
-     *
-     * @return SQL object
-     */
-    public MySQL getMySQL() {
-        return VelocityPlugin.sql;
     }
 
     /**
