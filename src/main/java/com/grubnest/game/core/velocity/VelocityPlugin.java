@@ -40,7 +40,6 @@ public class VelocityPlugin {
         VelocityPlugin.server.sendMessage(Component.text("GrubnestCore is enabled on Velocity!"));
 
         instance = this;
-        DatabaseManager.init();
     }
 
     /**
@@ -52,7 +51,7 @@ public class VelocityPlugin {
     public void onInitialize(ProxyInitializeEvent event) {
         VelocityPlugin.server.getEventManager().register(this, new CoreEventListener());
 
-        getMySQL().createTables();
+        DatabaseManager.getInstance().getMySQL().createTables();
     }
 
     /**

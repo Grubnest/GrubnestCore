@@ -33,7 +33,6 @@ public class GrubnestCorePlugin extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.AQUA + "GrubnestCore is Enabled");
 
         loadConfig();
-        DatabaseManager.init();
     }
 
     /**
