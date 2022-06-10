@@ -4,7 +4,7 @@ The Core plugin for the Minecraft Minigame server, The Grubnest
 ## How to do work
 1. Click the projects tab
 2. Find an issue assigned to you
-3. Fork this repo
+3. Fork this repo (click fork button in top right)
 4. Create a new branch on your fork off of the DEVELOPMENT branch. If it's a bug, start branch name with 'hotfix'. Otherwise start it with 'feature'.
 6. Pull remote branch to your local machine and fix issue / do task.
 7. Push local branch to your remote fork
