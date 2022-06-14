@@ -91,7 +91,7 @@ public class MySQL extends ConnectionPoolManager {
                      """)) {
             statement.setString(1, username);
             ResultSet queryResults = statement.executeQuery();
-            queryResults.first();
+            queryResults.next();
 
             return Optional.of(UUID.fromString(queryResults.getString(1)));
         } catch (SQLException e) {
@@ -116,7 +116,7 @@ public class MySQL extends ConnectionPoolManager {
                     """);
             statement.setString(1, id.toString());
             ResultSet queryResults = statement.executeQuery();
-            queryResults.first();
+            queryResults.next();
 
             return Optional.of(queryResults.getString(1));
         } catch (SQLException e) {
