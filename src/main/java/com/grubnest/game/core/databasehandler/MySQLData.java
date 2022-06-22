@@ -2,8 +2,13 @@ package com.grubnest.game.core.databasehandler;
 
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.InputStream;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * MysqlData object to store credentials etc
@@ -39,10 +44,32 @@ public class MySQLData {
      * @return MySQLData
      */
     public static MySQLData dataInitializer() {
-        Yaml yaml = new Yaml();
-        InputStream inputStream = MySQLData.class.getClassLoader().getResourceAsStream("config.yml");
-        Map<String, Object> config;
-        config = (Map<String, Object>) ((Map<String, Object>) yaml.load(inputStream)).get("Database");
+        File configFile;
+        String jarPath = Paths.get(MySQLData.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString()).getParent().getFileName() + "/GrubnestCore/config.yml";
+
+        // Creates config.yml file if it doesn't exist
+        if (!Files.exists(Paths.get(jarPath))) {
+            configFile = new File(jarPath.toString());
+            configFile.getParentFile().mkdirs();
+
+            try {
+                // Copy default config into new file
+                Files.copy(Objects.requireNonNull(MySQLData.class.getClassLoader().getResourceAsStream("config.yml")), Paths.get(jarPath));
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("An exception occurred while creating a new config.yml file");
+            }
+        }
+
+        InputStream stream;
+        try {
+            stream = new FileInputStream(new File(jarPath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("config.yml file does not exist!");
+        }
+
+        Map<String, Object> config = (Map<String, Object>) ((Map<String, Object>) new Yaml().load(stream)).get("Database");
 
         String host = (String) config.get("hostname");
         int port = (int) config.get("port");

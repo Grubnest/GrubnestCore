@@ -52,6 +52,7 @@ public class VelocityPlugin {
         VelocityPlugin.server.getEventManager().register(this, new CoreEventListener());
 
         DatabaseManager.getInstance().getMySQL().createTables();
+
     }
 
     /**
